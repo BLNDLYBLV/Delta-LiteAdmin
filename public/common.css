@@ -1,0 +1,16 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+body{
+    background-color: #EBEBEB;
+}
+.navbar{
+    background-color: black;
+    color: white;
+    font-size: x-large;
+    /* font-weight: bold; */
+}
+.connectbox{
+    background-color: white;
+}

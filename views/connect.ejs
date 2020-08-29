@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+<div class="container connectbox">
+    <div>
+        Enter connection string
+    </div>
+    <div>
+        <form action="/connect" method="POST">
+            <input type="text" name="connectstring">
+            <button>Connect</button>
+        </form> 
+    </div>
+    <div>
+        Or
+    </div>
+    <div>
+        Connect to localhost
+    </div>
+    <div>
+        <form action="/connect" method="POST">
+            <Button>Connect</Button>
+        </form>
+    </div>
+</div>
+<%- include('partials/footer') %>

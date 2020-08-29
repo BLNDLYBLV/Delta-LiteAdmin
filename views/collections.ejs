@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+    <div class="container">
+        <form action="/databases" method="GET">
+            <button>back</button>
+        </form>
+        <% for(var i=0;i<c.length;i++){ %>
+            <form action="/docs/<%= c[i].name %>/<%= dbname %>" method="GET">
+                <button>
+                    <%= c[i].name %>
+                </button> 
+            </form>
+        <% } %>
+    </div>
+<%- include('partials/footer') %>

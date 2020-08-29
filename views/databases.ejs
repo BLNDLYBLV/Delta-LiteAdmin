@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+    <div class="container">
+        <form action="/connect" method="GET">
+            <button>back</button>
+        </form>
+        <% for(var i=0;i<dbs.databases.length;i++){ %>
+            <form action="/collections/<%= dbs.databases[i].name %>" method="GET">
+                <button>
+                    <%= dbs.databases[i].name %>
+                </button> 
+            </form>
+        <% } %>
+    </div>
+<%- include('partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+    <div class="container">
+        <form action="/collections/<%= dbname %>">
+            <button>Back</button>
+        </form>
+        <% for(var i=0;i<c.length;i++){ %>
+            <form action="/docs/<%= c[i].name %>/<%= dbname %>" method="GET">
+                <% for(var j=0;j<properties.length;j++){ %>
+                <div>
+                <button><%= properties[j]+':' %> </button>
+                <button>
+                    <%= c[i][properties[j]] %>
+                </button>
+                </div> 
+                <% } %>
+            </form>
+        <% } %>
+    </div>
+<%- include('partials/footer') %>
