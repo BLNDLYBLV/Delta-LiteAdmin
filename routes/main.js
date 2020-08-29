@@ -6,14 +6,15 @@ var {ensureAuthenticated}=require('../config/auth');
 var async = require('async');
 
 var User= require('../models/User');
+const e = require('express');
 var uri;
 app.get('/', (req,res) => {
     res.redirect('/users/login');
 });
-app.get('/connect',(req,res)=>{
+app.get('/connect',ensureAuthenticated,(req,res)=>{
     res.render('connect.ejs');
 });
-app.post('/connect',(req,res)=>{
+app.post('/connect',ensureAuthenticated,(req,res)=>{
     var cstring=req.body.connectstring;
     // var dbs;
     if(cstring==undefined){
@@ -21,7 +22,7 @@ app.post('/connect',(req,res)=>{
         res.redirect('/databases');
     } 
 });
-app.get('/databases',(req,res)=>{
+app.get('/databases',ensureAuthenticated,(req,res)=>{
     var dbs;
     mongodb.MongoClient.connect('mongodb://localhost/', {
         useNewUrlParser: true,
@@ -40,7 +41,7 @@ app.get('/databases',(req,res)=>{
     });
     console.log(dbs);
 });
-app.get('/collections/:dbname',(req,res)=>{
+app.get('/collections/:dbname',ensureAuthenticated,(req,res)=>{
     var dbname=req.params.dbname;
     // console.log(dbname);
     mongodb.MongoClient.connect('mongodb://localhost/', {
@@ -57,7 +58,7 @@ app.get('/collections/:dbname',(req,res)=>{
     });
 });
 
-app.get('/docs/:cname/:dbname',(req,res)=>{
+app.get('/docs/:cname/:dbname',ensureAuthenticated,(req,res)=>{
     var cname=req.params.cname;
     var dbname=req.params.dbname;
     mongodb.MongoClient.connect('mongodb://localhost/', {
@@ -81,7 +82,7 @@ app.get('/docs/:cname/:dbname',(req,res)=>{
     });    
     // console.log(dbs);
 });
-app.post('/dbdelete/:dbname',(req,res)=>{
+app.post('/dbdelete/:dbname',ensureAuthenticated,(req,res)=>{
     var dbname=req.params.dbname;
     mongodb.MongoClient.connect('mongodb://localhost/', {
         useNewUrlParser: true,
@@ -92,7 +93,7 @@ app.post('/dbdelete/:dbname',(req,res)=>{
         res.redirect('/databases');
     });
 });
-app.post('/cdelete/:dbname/:cname',(req,res)=>{
+app.post('/cdelete/:dbname/:cname',ensureAuthenticated,(req,res)=>{
     var dbname=req.params.dbname;
     var cname=req.params.cname;
     mongodb.MongoClient.connect('mongodb://localhost/', {
@@ -104,7 +105,7 @@ app.post('/cdelete/:dbname/:cname',(req,res)=>{
         res.redirect('/collections/'+dbname);
     });
 });
-app.post('/adddb',(req,res)=>{
+app.post('/adddb',ensureAuthenticated,(req,res)=>{
     var dbname=req.body.dbname;
     var cname=req.body.cname;
     var already=0;
@@ -135,7 +136,7 @@ app.post('/adddb',(req,res)=>{
     }
     res.redirect('/databases');
 });
-app.post('/addelement/:dbname/:cname',(req,res)=>{
+app.post('/addelement/:dbname/:cname',ensureAuthenticated,(req,res)=>{
     var cname=req.params.cname;
     var dbname=req.params.dbname;
     var jsontxt=req.body.jsontxt;
@@ -149,7 +150,7 @@ app.post('/addelement/:dbname/:cname',(req,res)=>{
         res.redirect('/docs/'+cname+'/'+dbname);
     });
 });
-app.post('/upelement/:dbname/:cname/:id',(req,res)=>{
+app.post('/upelement/:dbname/:cname/:id',ensureAuthenticated,(req,res)=>{
     var cname=req.params.cname;
     var dbname=req.params.dbname;
     var jsontxt=req.body.jsontxt;
@@ -177,7 +178,7 @@ app.post('/upelement/:dbname/:cname/:id',(req,res)=>{
         res.redirect('/docs/'+cname+'/'+dbname);
     });
 });
-app.post('/elementdelete/:dbname/:cname/:id',(req,res)=>{
+app.post('/elementdelete/:dbname/:cname/:id',ensureAuthenticated,(req,res)=>{
     var cname=req.params.cname;
     var dbname=req.params.dbname;
     var id=req.params.id;
