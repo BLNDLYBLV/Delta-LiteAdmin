@@ -14,3 +14,55 @@ body{
 .connectbox{
     background-color: white;
 }
+button{
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 4px;
+    margin: 8px;
+    border-radius: 6px;
+}
+.doc{
+    padding: 20px 30px;
+    width: 100%;
+    background-color: white;
+    font-size: 13px;
+    margin: 10px;
+}
+.databasebox{
+    /* padding: 20px; */
+    /* margin: 10px; */
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    background-color: white;
+}
+.databaseele{
+    width: 90%;
+    padding: 5px;
+    margin-left: 15px;
+    display: inline-block;
+    /* margin: 10px; */
+}
+button:hover{
+    cursor: pointer;
+}
+button:focus{
+    outline: none;
+}
+.modalback{
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0 ,0, 0.5) ;
+    display: none;
+}
+.addmodal{
+    margin-left: 27%;
+    margin-top: 15%;
+    border-radius: 20px;
+    width: 500px;
+    height: 300px;
+    background-color: white;
+}

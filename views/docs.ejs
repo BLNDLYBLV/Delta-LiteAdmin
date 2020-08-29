@@ -1,19 +1,94 @@
 <%- include('partials/header') %>
     <div class="container">
-        <form action="/collections/<%= dbname %>">
+        <div style="display: inline-block; margin-left: 10px;font-size: 30px;"><%= dbname+'.'+cname %></div>
+        <form style="display: inline-block;float:right;"    action="/collections/<%= dbname %>">
             <button>Back</button>
         </form>
+        <button onclick="addmodalon()" style="float: right;background-color: rgb(19,163,81);color: white;position: relative;top: 0px;">Add document </button>
+        <div class="modalback" id="addmodal">
+            <div class="addmodal" style="width: 800px; height: max-content;margin-top: 5%;" >
+                <div style="padding: 20px;">Add new Doc</div>
+                <hr style="margin: 0%;">
+                <div style="margin-left: 30px; margin-top: 20px;padding: 20px;width: max-content;">
+                    <form action="/addelement/<%= dbname %>/<%= cname %>" method="POST">
+                        <div style="display: none;" >Database name</div>
+                        <input style="display: none;" value="<%= dbname %>" type="text" name="dbname">
+                        <div>Please type in JSON</div>
+                        <textarea style="padding: 5px;" rows="5" cols="80" type="text" name="jsontxt"></textarea>
+                        <button style="display: block;margin-top: 10px;position: relative;left: 550px;">Add</button>
+                    </form>
+                </div>
+            </div>      
+        </div>
+        <div class="modalback" id="updatemodal">
+            <div class="addmodal" style="width: 800px; height: max-content;margin-top: 5%;" >
+                <div style="padding: 20px;">Update Doc</div>
+                <hr style="margin: 0%;">
+                <div style="margin-left: 30px; margin-top: 20px;padding: 20px;width: max-content;">
+                    <form action="/upelement/<%= dbname %>/<%= cname %>" method="POST">
+                        <div style="display: none;" >Database name</div>
+                        <input style="display: none;" value="<%= dbname %>" type="text" name="dbname">
+                        <div>Please type in JSON</div>
+                        <textarea id="uptxt" style="padding: 5px;" rows="5" cols="80" type="text" name="jsontxt"></textarea>
+                        <button style="display: block;margin-top: 10px;position: relative;left: 550px;">Update</button>
+                    </form>
+                </div>
+            </div>      
+        </div>
         <% for(var i=0;i<c.length;i++){ %>
-            <form action="/docs/<%= c[i].name %>/<%= dbname %>" method="GET">
-                <% for(var j=0;j<properties.length;j++){ %>
-                <div>
-                <button><%= properties[j]+':' %> </button>
-                <button>
-                    <%= c[i][properties[j]] %>
+            <div class="doc">
+                <div style="display: inline-block; width: max-content;margin-right: 0;" >
+                    <% for(var j=0;j<properties.length;j++){ %>
+                    <div style="width: max-content;">
+                    <span style="color: black;"><%= properties[j]+':' %> </span>
+                    <span style="color: rgb(7, 138, 214);">
+                        <%= c[i][properties[j]] %>
+                    </span>
+                    </div> 
+                    <% } %>
+                </div>
+                <form action="/elementdelete/<%= dbname %>/<%= cname %>/<%= c[i]['_id'] %>" method="POST" style="display: inline-block;margin-left: 40px;">
+                    <button class="fa fa-trash-alt"> 
+
+                    </button>
+                </form>
+                <button onclick="umodalon('<%= JSON.stringify(c[i]) %>');" style="margin-left: -5px;" class="fa fa-edit"> 
+
                 </button>
-                </div> 
-                <% } %>
-            </form>
+            </div>
+
         <% } %>
+        
     </div>
+    <script>
+        function addmodalon(){
+            console.log('works');
+            var modal=document.getElementById('addmodal');
+            // console.log(modal);
+            modal.style.display='block';
+        }
+        function umodalon(t){
+            console.log('works');
+            var modal=document.getElementById('updatemodal');
+            var txt=document.getElementById('uptxt');
+            
+            var myobj=JSON.parse(t);
+            t=JSON.stringify(myobj,null,4);
+            // console.log(modal);
+            txt.value=t;
+            modal.style.display='block';
+        }
+        window.addEventListener('click',(e)=>{
+            if(e.target.id=='addmodal'){
+                var modal=document.getElementById('addmodal');
+            // console.log(modal);
+            modal.style.display='none';
+            }
+            if(e.target.id=='updatemodal'){
+                var modal=document.getElementById('updatemodal');
+            // console.log(modal);
+            modal.style.display='none';
+            }
+        });
+    </script>
 <%- include('partials/footer') %>

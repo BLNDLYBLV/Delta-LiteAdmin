@@ -3,12 +3,51 @@
         <form action="/connect" method="GET">
             <button>back</button>
         </form>
-        <% for(var i=0;i<dbs.databases.length;i++){ %>
-            <form action="/collections/<%= dbs.databases[i].name %>" method="GET">
-                <button>
-                    <%= dbs.databases[i].name %>
-                </button> 
-            </form>
-        <% } %>
+        <div class="databasebox">
+            <% for(var i=0;i<dbs.databases.length;i++){ %>
+                <form  class="databaseele" action="/collections/<%= dbs.databases[i].name %>" method="GET">
+                    <button style="border: none;width: 100%;text-align: left;">
+                        <%= dbs.databases[i].name %>
+                    </button> 
+                </form>
+                <form action="/dbdelete/<%= dbs.databases[i].name %>" method="POST" style="display: inline-block;">
+                    <button class="fa fa-trash-alt"> 
+
+                    </button>
+                </form>
+                <hr style="margin: 0;">
+            <% } %>
+        </div>
+        <button onclick="addmodalon()" style="float: right;background-color: rgb(19,163,81);color: white;">Add new DB </button>
+        <div class="modalback" id="addmodal">
+            <div class="addmodal" >
+                <div style="padding: 20px;">Add database</div>
+                <hr style="margin: 0%;">
+                <div style="margin-left: 30px; margin-top: 20px;padding: 20px;width: max-content;">
+                    <form action="/adddb" method="POST">
+                        <div>Database name</div>
+                        <input type="text" name="dbname">
+                        <div>Collection name</div>
+                        <input type="text" name="cname">
+                        <button style="display: block;float: right;margin-top: 50px;position: relative;right: 50px;">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        function addmodalon(){
+            console.log('works');
+            var modal=document.getElementById('addmodal');
+            // console.log(modal);
+            modal.style.display='block';
+        }
+        window.addEventListener('click',(e)=>{
+            if(e.target.id=='addmodal'){
+                var modal=document.getElementById('addmodal');
+            // console.log(modal);
+            modal.style.display='none';
+            }
+        });
+    </script>
 <%- include('partials/footer') %>
