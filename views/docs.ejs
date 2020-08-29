@@ -25,7 +25,7 @@
                 <div style="padding: 20px;">Update Doc</div>
                 <hr style="margin: 0%;">
                 <div style="margin-left: 30px; margin-top: 20px;padding: 20px;width: max-content;">
-                    <form action="/upelement/<%= dbname %>/<%= cname %>" method="POST">
+                    <form id="upform" action="/upelement/<%= dbname %>/<%= cname %>/" method="POST">
                         <div style="display: none;" >Database name</div>
                         <input style="display: none;" value="<%= dbname %>" type="text" name="dbname">
                         <div>Please type in JSON</div>
@@ -66,6 +66,7 @@
             var modal=document.getElementById('addmodal');
             // console.log(modal);
             modal.style.display='block';
+
         }
         function umodalon(t){
             console.log('works');
@@ -73,6 +74,8 @@
             var txt=document.getElementById('uptxt');
             
             var myobj=JSON.parse(t);
+            var upform=document.getElementById('upform');
+            upform.action+=String(myobj._id);
             t=JSON.stringify(myobj,null,4);
             // console.log(modal);
             txt.value=t;

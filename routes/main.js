@@ -149,10 +149,11 @@ app.post('/addelement/:dbname/:cname',(req,res)=>{
         res.redirect('/docs/'+cname+'/'+dbname);
     });
 });
-app.post('/upelement/:dbname/:cname',(req,res)=>{
+app.post('/upelement/:dbname/:cname/:id',(req,res)=>{
     var cname=req.params.cname;
     var dbname=req.params.dbname;
     var jsontxt=req.body.jsontxt;
+    console.log(dbname,cname);
     var setobj=JSON.parse(jsontxt);
     var newobj=setobj;
     delete setobj._id;
@@ -163,7 +164,7 @@ app.post('/upelement/:dbname/:cname',(req,res)=>{
     //     setobjstr+= ':'
     //     setobjstr+= setobj[Object.getOwnPropertyNames(setobj)[i]];
     // }
-    var id=(newobj._id);
+    var id=req.params.id;
     setobjstr+=JSON.stringify(setobj)
     setobjstr+='}';
     console.log(setobjstr);
@@ -172,7 +173,7 @@ app.post('/upelement/:dbname/:cname',(req,res)=>{
         useUnifiedTopology: true
     },async (err,db)=>{
         var cdb=db.db(dbname);
-        await cdb.collection(cname).updateOne({_id: new mongodb.ObjectID(id)},{$set: setobj},{ upsert: false });
+        await cdb.collection(cname).updateOne({_id: new mongodb.ObjectID(id)},{$set:setobj});
         res.redirect('/docs/'+cname+'/'+dbname);
     });
 });
