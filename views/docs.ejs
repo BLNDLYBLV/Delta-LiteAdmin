@@ -1,9 +1,15 @@
 <%- include('partials/header') %>
+<% for(var i=0;i<c.length;i++){ %>
+    <span class="jsoner" style="display: none;">    
+        <%= JSON.stringify(c[i]) %>
+    </span>
+<% } %>
     <div class="container">
         <div style="display: inline-block; margin-left: 10px;font-size: 30px;"><%= dbname+'.'+cname %></div>
         <form style="display: inline-block;float:right;"    action="/collections/<%= dbname %>">
             <button>Back</button>
         </form>
+        <a id="link" download="<%= String(Date.now()) %>.json" href="">Download</a>
         <button onclick="addmodalon()" style="float: right;background-color: rgb(19,163,81);color: white;position: relative;top: 0px;">Add document </button>
         <div class="modalback" id="addmodal">
             <div class="addmodal" style="width: 800px; height: max-content;margin-top: 5%;" >
@@ -93,5 +99,25 @@
             modal.style.display='none';
             }
         });
+        var jsoner=document.getElementsByClassName('jsoner');
+        var jsonertxt='{"docs":[';
+        for(var i=0;i<jsoner.length;i++){
+            jsonertxt+=jsoner[i].innerHTML;
+            if(i!=jsoner.length-1)
+            jsonertxt+=',';
+        }
+        jsonertxt+=']}';
+        console.log(jsonertxt);
+        // var final=JSON.parse(jsonertxt);
+        var txtFile ="test.txt";
+        // var str = JSON.stringify(final);
+        var file = new File([jsonertxt],txtFile,{type: "text/plain"});
+
+        // file.open;
+        // file.writelinestr;
+        // file.close();
+        var dataUri = 'data:application/json;charset=utf-8,'+jsonertxt ;
+        // document.getElementById('link').href = dataUri;
+        var link = document.getElementById('link').href = dataUri;
     </script>
 <%- include('partials/footer') %>
